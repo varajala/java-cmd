@@ -3,9 +3,9 @@
 A simple command line interpreter made with Java.
 
 
-## Building and Running:
+## Building and running with Maven:
 
-Build with Maven:
+Compilation:
 
     mvn compile
 
@@ -20,7 +20,7 @@ Run application:
     ./maven-exec.sh
 
 
-With Python script:
+## Build and run With Python script:
 
 Download JUnit 5 dependencies:
 
