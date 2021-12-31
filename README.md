@@ -1,4 +1,4 @@
-# java-cmd-interpreter
+# java-cmd
 
 A simple command line interpreter made with Java.
 
@@ -24,13 +24,13 @@ With Python script:
 
 Download JUnit 5 dependencies:
 
-    - apiguardian-api-1.0.0.jar        
-    - jars/junit-jupiter-5.X.Y.jar,
-    - junit-jupiter-api-5.X.Y.jar
-    - junit-jupiter-engine-5.X.Y.jar
-    - junit-jupiter-params-5.X.Y.jar
+  - apiguardian-api-1.0.0.jar        
+  - jars/junit-jupiter-5.X.Y.jar,
+  - junit-jupiter-api-5.X.Y.jar
+  - junit-jupiter-engine-5.X.Y.jar
+  - junit-jupiter-params-5.X.Y.jar
 
-More info in [JUnit docs](#https://junit.org/junit5/docs/current/user-guide/#dependency-metadata).
+More info in JUnit [docs](https://junit.org/junit5/docs/current/user-guide/#dependency-metadata).
 
 Save these .jar-files into your machine and insert the install path to the Python script:
 

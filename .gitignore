@@ -1,5 +1,5 @@
 # .class filed and maven build files
-bin
+bin/*
 target
 
 # Cached Python modules
