@@ -39,6 +39,12 @@ Save these .jar-files into your machine and insert the install path to the Pytho
 JARS_LIB_PATH = '/path/to/jars'
 ```
 
+Insert the standalone console platform jar name:
+
+```python
+JUNIT_JAR_PATH = os.path.join(JARS_LIB_PATH, 'junit-platform-console-standalone-X.Y.Zjar')
+```
+
 Remember to change the package versions also:
 
 ```python
