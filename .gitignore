@@ -1,0 +1,6 @@
+# .class filed and maven build files
+bin
+target
+
+# Cached Python modules
+__pycache__
