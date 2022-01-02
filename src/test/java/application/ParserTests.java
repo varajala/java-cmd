@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import application.Parser;
-
 
 public class ParserTests {
 

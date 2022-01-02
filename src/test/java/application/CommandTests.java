@@ -3,11 +3,6 @@ package application;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import application.CapitalizeCommand;
-import application.Command;
-import application.IsPalindromeCommand;
-import application.SumCommand;
-
 
 public class CommandTests {
     
