@@ -1,6 +1,6 @@
 # java-cmd
 
-A simple command line interpreter made with Java.
+A simple command line interpreter made with Java. This project was done as a university course assignment.
 
 
 ## Building and running with Maven:
