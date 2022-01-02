@@ -1,9 +1,11 @@
 import os
 import glob
 import sys
+import re
 import shutil
 import typing
 import subprocess as subp
+from contextlib import suppress
 from dataclasses import dataclass
 
 
@@ -18,6 +20,11 @@ JAVA_JAR_FLAG = '-jar'
 JAVA_CLASSPATH_FLAG = '-classpath'
 JAVA_MODULE_PATH_FLAG = '--module-path'
 JAVA_ADD_MODULES_FLAG = '--add-modules'
+
+JAR_CMD = 'jar'
+JAR_CREATE_FLAG = '--create'
+JAR_OUTPUT_FILE_FLAG = '--file'
+JAR_ENTRYPOINT_FLAG = '--main-class'
 
 
 class ChangeWorkingDirectory:
@@ -108,7 +115,7 @@ def change_working_dir(path):
     return ChangeWorkingDirectory(path)
 
 
-def find_files_with_pattern(pattern: str, path: str, *, only_names = False) -> list:
+def find_files_with_pattern(pattern: str, path: str, *, only_names = False, exclude_files = None) -> list:
     with change_working_dir(path):
         if only_names:
             output = glob.glob(pattern)        
@@ -117,8 +124,27 @@ def find_files_with_pattern(pattern: str, path: str, *, only_names = False) -> l
     
     for entry in os.scandir(path):
         if entry.is_dir():
-            output.extend(find_files_with_pattern(pattern, entry.path, only_names = only_names))
-    return output
+            output.extend(
+                find_files_with_pattern(
+                    pattern,
+                    entry.path,
+                    only_names = only_names,
+                    exclude_files=exclude_files
+                    )
+                )
+
+    def filter_results(files: list) -> list:
+        filtered_files = files.copy()
+        
+        if exclude_files is None:
+            return filtered_files
+
+        with suppress(Exception):
+            regex = re.compile(exclude_files)
+            filtered_files = filter(lambda path: not re.match(regex, path), files)
+        return filtered_files
+
+    return filter_results(output)
 
 
 def copy_files(src, dst, patterns):
@@ -184,3 +210,21 @@ def build_and_run(options: JavaBuildOptions, *, build_path: str, run_path: str, 
     
     run_only(options, path = run_path, output_stream = output_stream)
 
+
+def create_jar(
+    output_jar: str,
+    class_files: typing.List[str],
+    class_file_path: str,
+    *, entrypoint: typing.Optional[str] = None,
+    output_stream = sys.stdout
+    ) -> bool:
+    command = [JAR_CMD, JAR_CREATE_FLAG, JAR_OUTPUT_FILE_FLAG, os.path.abspath(output_jar)]
+    if entrypoint is not None:
+        command.append(JAR_ENTRYPOINT_FLAG)
+        command.append(entrypoint)
+
+    if not class_files:
+        raise RuntimeError('No .class files given for packaging...')
+    command.extend(class_files)
+
+    return run_command(command, path=class_file_path, output_stream=output_stream)
